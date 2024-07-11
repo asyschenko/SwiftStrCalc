@@ -1,1 +1,1 @@
-# SwiftStrCalc
+# Swift string calculator
