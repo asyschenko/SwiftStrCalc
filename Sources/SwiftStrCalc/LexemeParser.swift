@@ -9,6 +9,8 @@ import Foundation
 
 final class LexemeParser {
 
+    private var prevState: State = .stateInitial
+    private var currentLexStr: String = ""
     private var finalStateMachine: FinalStateMachine<State>?
 
     func parse(exp: String) throws {
@@ -34,6 +36,8 @@ private extension LexemeParser {
         case stateAtom      // Variable, constant, function...
         case stateWS        // Whitespace
         case stateFinal
+
+        var isBracket: Bool { self == .stateCB || self == .stateOB }
     }
 
     enum Step {
@@ -52,12 +56,26 @@ private extension LexemeParser {
 private extension LexemeParser {
 
     func handleResult(_ result: FinalStateMachine<State>.StateResult) throws {
+        var currentState: State = .stateInitial
+
         switch result {
         case let .initial(state):
-            print("State:", state)
-        case let .success(ch, index, state):
+            prevState = state
+            currentState = state
+            currentLexStr.removeAll()
+        case let .success(ch, _, state):
             if state != .stateWS {
-                print("S", "Ch:", ch, "Index:", index, "State:", state)
+                currentState = state
+
+                if !currentLexStr.isEmpty && (currentState.isBracket || currentState != prevState) {
+                    print(currentLexStr)
+                    currentLexStr.removeAll()
+                }
+                currentLexStr.append(ch)
+                prevState = currentState
+
+
+//                print("S", "Ch:", ch, "Index:", index, "State:", state)
             }
         case let .failure(ch, index, state):
             print("F", "Ch:", ch, "Index:", index, "State:", state)
@@ -136,13 +154,6 @@ private extension LexemeParser {
             }
             route[currentState] = routeSteps
         }
-
-//        route.forEach { a in
-//            print(a.key, ":")
-//            a.value.forEach { b in
-//                print("\t", "\(b.key): \(b.value)")
-//            }
-//        }
         return FinalStateMachine(route: route, initialState: .stateInitial, finalStates: [.stateFinal])
     }
 
