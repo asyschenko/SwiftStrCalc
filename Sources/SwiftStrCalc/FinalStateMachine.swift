@@ -21,18 +21,18 @@ final class FinalStateMachine<StateType: Hashable> {
         self.finalStates = finalStates
     }
 
-    public func start(_ string: String, statesHandler: (StateResult) -> Void) {
+    public func start(_ string: String, statesHandler: (StateResult) throws -> Void) throws {
         var currentState = initialState
         var counter: Int = 0
 
-        statesHandler(.initial(initialState))
+        try statesHandler(.initial(initialState))
 
         for currentChar in string {
             if let currentStateRote = route[currentState], let nextState = currentStateRote[currentChar] {
                 currentState = nextState
-                statesHandler(.success(currentChar, counter, nextState))
+                try statesHandler(.success(currentChar, counter, nextState))
             } else {
-                statesHandler(.failure(currentChar, counter, currentState))
+                try statesHandler(.failure(currentChar, counter, currentState))
                 break
             }
             counter += 1

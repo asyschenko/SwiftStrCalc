@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		291624782C45699800DD3759 /* FinalStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291624772C45699800DD3759 /* FinalStateMachine.swift */; };
+		298030B42C4E419C00471172 /* LexemeParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298030B32C4E419C00471172 /* LexemeParser.swift */; };
+		298030B62C4E422200471172 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298030B52C4E422200471172 /* Errors.swift */; };
 		29AD15772C3FFE7E003F8CA3 /* SwiftStrCalc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AD156E2C3FFE7E003F8CA3 /* SwiftStrCalc.framework */; };
 		29AD15882C3FFED1003F8CA3 /* SwiftStrCalc.h in Headers */ = {isa = PBXBuildFile; fileRef = 29AD15872C3FFED1003F8CA3 /* SwiftStrCalc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		29AD158B2C3FFEE2003F8CA3 /* FinalStateMachineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD15892C3FFEE2003F8CA3 /* FinalStateMachineTest.swift */; };
@@ -27,6 +29,8 @@
 
 /* Begin PBXFileReference section */
 		291624772C45699800DD3759 /* FinalStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalStateMachine.swift; sourceTree = "<group>"; };
+		298030B32C4E419C00471172 /* LexemeParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LexemeParser.swift; sourceTree = "<group>"; };
+		298030B52C4E422200471172 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		29AD156E2C3FFE7E003F8CA3 /* SwiftStrCalc.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftStrCalc.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29AD15762C3FFE7E003F8CA3 /* SwiftStrCalcTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftStrCalcTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		29AD15872C3FFED1003F8CA3 /* SwiftStrCalc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftStrCalc.h; sourceTree = SOURCE_ROOT; };
@@ -77,7 +81,9 @@
 			children = (
 				29AD158C2C3FFEF6003F8CA3 /* README.md */,
 				29AD15872C3FFED1003F8CA3 /* SwiftStrCalc.h */,
+				298030B52C4E422200471172 /* Errors.swift */,
 				291624772C45699800DD3759 /* FinalStateMachine.swift */,
+				298030B32C4E419C00471172 /* LexemeParser.swift */,
 				29AD158E2C3FFF46003F8CA3 /* SwiftStrCalc.swift */,
 			);
 			name = SwiftStrCalc;
@@ -204,7 +210,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				298030B62C4E422200471172 /* Errors.swift in Sources */,
 				29AD158F2C3FFF46003F8CA3 /* SwiftStrCalc.swift in Sources */,
+				298030B42C4E419C00471172 /* LexemeParser.swift in Sources */,
 				291624782C45699800DD3759 /* FinalStateMachine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
