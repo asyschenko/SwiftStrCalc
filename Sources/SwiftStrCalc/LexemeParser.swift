@@ -14,6 +14,7 @@ final class LexemeParser {
     func parse(exp: String) throws {
         var prevState: State = .stateInitial
         var currentLexStr: String = ""
+        var error: CalcError?
 
         if finalStateMachine == nil {
             finalStateMachine = createFSM()
@@ -21,19 +22,22 @@ final class LexemeParser {
 
         finalStateMachine?.start(exp + "#") { result in
             switch result {
-            case let .success(ch, index, state):
+            case let .success(char, _, state):
                 if !state.isWhitespace {
                     if !currentLexStr.isEmpty && (state.isBracket || state != prevState) {
                         print(currentLexStr)
                         currentLexStr.removeAll()
                     }
-                    currentLexStr.append(ch)
+                    currentLexStr.append(char)
                     prevState = state
                 }
-                print("S", "Ch:", ch, "Index:", index, "State:", state)
-            case let .failure(ch, index, state):
-                print("F", "Ch:", ch, "Index:", index, "State:", state)
+            case let .failure(char, index, _):
+                error = .FSMRouteError(char: char, index: index)
             }
+        }
+
+        if let error = error {
+            throw error
         }
     }
 }
