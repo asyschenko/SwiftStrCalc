@@ -11,8 +11,11 @@ open class Calc {
 
     private let lexParser: LexemeParser
 
+    let library: Library
+
     public init() {
-        self.lexParser = LexemeParser()
+        self.library = Library()
+        self.lexParser = LexemeParser(library: library)
     }
 
     public func calculate(_ exp: String) throws {
