@@ -14,11 +14,17 @@ open class Calc {
     let library: Library
 
     public init() {
+        self.lexParser = LexemeParser()
         self.library = Library()
-        self.lexParser = LexemeParser(library: library)
     }
 
     public func calculate(_ exp: String) throws {
-        try lexParser.parse(exp)
+        let lexemes = try lexParser.parse(exp)
+
+        print("Index\tValue\tType")
+        print("--------------------")
+        lexemes.forEach {
+            print("\($0.startIndexInExp)\t\t\($0.value)\t\t\($0.type)")
+        }
     }
 }

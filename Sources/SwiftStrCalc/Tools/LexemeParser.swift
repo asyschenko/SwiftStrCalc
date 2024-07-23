@@ -9,17 +9,13 @@ import Foundation
 
 final class LexemeParser {
 
-    private let library: Library
     private var finalStateMachine: FinalStateMachine<State>?
 
-    init(library: Library) {
-        self.library = library
-    }
-
-    func parse(_ exp: String) throws {
+    func parse(_ exp: String) throws -> [Lexeme] {
         var prevState: State = .stateInitial
         var currentLexStr: String = ""
         var error: CalcError?
+        var lexemes: [Lexeme] = []
 
         if finalStateMachine == nil {
             finalStateMachine = createFSM()
@@ -27,10 +23,12 @@ final class LexemeParser {
 
         finalStateMachine?.start(exp + "#") { result in
             switch result {
-            case let .success(char, _, state):
+            case let .success(char, index, state):
                 if !state.isWhitespace {
                     if !currentLexStr.isEmpty && (state.isBracket || state != prevState) {
-                        print(currentLexStr)
+                        lexemes.append(Lexeme(type: prevState.lexemeType,
+                                              value: currentLexStr,
+                                              startIndexInExp: index))
                         currentLexStr.removeAll()
                     }
                     currentLexStr.append(char)
@@ -44,6 +42,26 @@ final class LexemeParser {
         if let error = error {
             throw error
         }
+        return lexemes
+    }
+}
+
+// MARK: - Types
+extension LexemeParser {
+
+    enum LexemeType {
+        case number
+        case atom
+        case `operator`
+        case openBracket
+        case closeBracket
+        case unowned
+    }
+
+    struct Lexeme {
+        let type: LexemeType
+        let value: String
+        let startIndexInExp: UInt
     }
 }
 
@@ -66,6 +84,17 @@ private extension LexemeParser {
 
         var isBracket: Bool { self == .stateCB || self == .stateOB }
         var isWhitespace: Bool { self == .stateWS || self == .stateWSCB || self == .stateWSOperator || self == .stateWSNumber || self == .stateWSAtom }
+
+        var lexemeType: LexemeType {
+            switch self {
+            case .stateNumber: return .number
+            case .stateAtom: return .atom
+            case .stateOperator: return .operator
+            case .stateOB: return .openBracket
+            case .stateCB: return .closeBracket
+            default: return .unowned
+            }
+        }
     }
 
     enum Step {
