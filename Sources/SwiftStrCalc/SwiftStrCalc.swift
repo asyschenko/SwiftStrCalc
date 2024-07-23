@@ -22,6 +22,6 @@ public final class Calc {
 //        try? lexParser.parse(exp: "1 * 22 + var + (1+2)")
 //        try? lexParser.parse(exp: "1 * 22 + (3.2 + 2) / cos_sin(_va_r2)")
 //        try? lexParser.parse(exp: "((sin(cos(tg(1 + 2) + var10) + var11) - pi) + variable) * 234.2233 / (2 + (3 + (2323 * var2 + 333 * 5343.4)))")
-        try? lexParser.parse(exp: "var2 = 1 + 3 + 5 - 4 * (-1)")
+        try? lexParser.parse(exp: "var2 = 1 + 3    3 + 5 - 4 * (-1)")
     }
 }

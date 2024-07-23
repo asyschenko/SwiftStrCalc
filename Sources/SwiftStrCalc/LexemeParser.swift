@@ -9,17 +9,31 @@ import Foundation
 
 final class LexemeParser {
 
-    private var prevState: State = .stateInitial
-    private var currentLexStr: String = ""
     private var finalStateMachine: FinalStateMachine<State>?
 
     func parse(exp: String) throws {
+        var prevState: State = .stateInitial
+        var currentLexStr: String = ""
+
         if finalStateMachine == nil {
             finalStateMachine = createFSM()
         }
 
-        try finalStateMachine?.start(exp + "#") { result in
-            try self.handleResult(result)
+        finalStateMachine?.start(exp + "#") { result in
+            switch result {
+            case let .success(ch, index, state):
+                if !currentLexStr.isEmpty && (state.isBracket || state != prevState) {
+                    if prevState != .stateWS {
+                        print(currentLexStr)
+                    }
+                    currentLexStr.removeAll()
+                }
+                currentLexStr.append(ch)
+                prevState = state
+                print("S", "Ch:", ch, "Index:", index, "State:", state)
+            case let .failure(ch, index, state):
+                print("F", "Ch:", ch, "Index:", index, "State:", state)
+            }
         }
     }
 }
@@ -55,33 +69,6 @@ private extension LexemeParser {
 // MARK: - Private
 private extension LexemeParser {
 
-    func handleResult(_ result: FinalStateMachine<State>.StateResult) throws {
-        var currentState: State = .stateInitial
-
-        switch result {
-        case let .initial(state):
-            prevState = state
-            currentState = state
-            currentLexStr.removeAll()
-        case let .success(ch, _, state):
-            if state != .stateWS {
-                currentState = state
-
-                if !currentLexStr.isEmpty && (currentState.isBracket || currentState != prevState) {
-                    print(currentLexStr)
-                    currentLexStr.removeAll()
-                }
-                currentLexStr.append(ch)
-                prevState = currentState
-
-
-//                print("S", "Ch:", ch, "Index:", index, "State:", state)
-            }
-        case let .failure(ch, index, state):
-            print("F", "Ch:", ch, "Index:", index, "State:", state)
-        }
-    }
-
     func createFSM() -> FinalStateMachine<State> {
         let sourceRoute: [State: [Step: State]] = [
             .stateInitial: [
@@ -116,7 +103,6 @@ private extension LexemeParser {
                 .stepWS: .stateWS,
                 .stepCB: .stateCB,
                 .stepOperator: .stateOperator,
-                .stepAtom: .stateAtom,
                 .stepNumber: .stateNumber,
                 .stepFinal: .stateFinal
             ],

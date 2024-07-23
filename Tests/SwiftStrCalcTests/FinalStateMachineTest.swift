@@ -43,13 +43,13 @@ class FinalStateMachineTest: XCTestCase {
         ]
     ]
 
-    func testSuccessFSM() throws {
+    func testSuccessFSM() {
         let FSM = FinalStateMachine(route: routeFSM,
                                initialState: .sInitial,
                                finalStates: [.sFinal])
         let str = "000+111+222+012."
 
-        try FSM.start(str) { res in
+        FSM.start(str) { res in
             switch res {
             case let .success(char, index, state):
                 print("Success:", char, index, state)
@@ -61,14 +61,14 @@ class FinalStateMachineTest: XCTestCase {
         }
     }
 
-    func testFailureFSM() throws {
+    func testFailureFSM() {
         let FSM = FinalStateMachine(route: routeFSM,
                                initialState: .sInitial,
                                finalStates: [.sFinal])
         let str = "000+111_+222+012."
         var failure = false
 
-        try FSM.start(str) { res in
+        FSM.start(str) { res in
             switch res {
             case let .success(char, index, state):
                 print("Success:", char, index, state)

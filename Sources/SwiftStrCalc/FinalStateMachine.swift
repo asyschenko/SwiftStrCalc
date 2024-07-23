@@ -21,18 +21,16 @@ final class FinalStateMachine<StateType: Hashable> {
         self.finalStates = finalStates
     }
 
-    public func start(_ string: String, statesHandler: (StateResult) throws -> Void) throws {
+    public func start(_ string: String, statesHandler: (StateResult) -> Void) {
         var currentState = initialState
         var counter: Int = 0
-
-        try statesHandler(.initial(initialState))
 
         for currentChar in string {
             if let currentStateRote = route[currentState], let nextState = currentStateRote[currentChar] {
                 currentState = nextState
-                try statesHandler(.success(currentChar, counter, nextState))
+                statesHandler(.success(currentChar, counter, nextState))
             } else {
-                try statesHandler(.failure(currentChar, counter, currentState))
+                statesHandler(.failure(currentChar, counter, currentState))
                 break
             }
             counter += 1
@@ -44,7 +42,6 @@ final class FinalStateMachine<StateType: Hashable> {
 extension FinalStateMachine {
 
     enum StateResult {
-        case initial(StateType)
         case success(Character, Int, StateType)
         case failure(Character, Int, StateType)
     }
