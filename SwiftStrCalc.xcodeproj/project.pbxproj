@@ -58,6 +58,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2971CAD82C4FD5FA00A89F63 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				291624772C45699800DD3759 /* FinalStateMachine.swift */,
+				298030B32C4E419C00471172 /* LexemeParser.swift */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
 		29AD15642C3FFE7E003F8CA3 = {
 			isa = PBXGroup;
 			children = (
@@ -81,9 +90,8 @@
 			children = (
 				29AD158C2C3FFEF6003F8CA3 /* README.md */,
 				29AD15872C3FFED1003F8CA3 /* SwiftStrCalc.h */,
+				2971CAD82C4FD5FA00A89F63 /* Tools */,
 				298030B52C4E422200471172 /* Errors.swift */,
-				291624772C45699800DD3759 /* FinalStateMachine.swift */,
-				298030B32C4E419C00471172 /* LexemeParser.swift */,
 				29AD158E2C3FFF46003F8CA3 /* SwiftStrCalc.swift */,
 			);
 			name = SwiftStrCalc;

@@ -11,7 +11,7 @@ final class LexemeParser {
 
     private var finalStateMachine: FinalStateMachine<State>?
 
-    func parse(exp: String) throws {
+    func parse(_ exp: String) throws {
         var prevState: State = .stateInitial
         var currentLexStr: String = ""
         var error: CalcError?
