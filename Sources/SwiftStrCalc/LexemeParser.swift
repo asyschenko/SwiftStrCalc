@@ -22,14 +22,14 @@ final class LexemeParser {
         finalStateMachine?.start(exp + "#") { result in
             switch result {
             case let .success(ch, index, state):
-                if !currentLexStr.isEmpty && (state.isBracket || state != prevState) {
-                    if prevState != .stateWS {
+                if !state.isWhitespace {
+                    if !currentLexStr.isEmpty && (state.isBracket || state != prevState) {
                         print(currentLexStr)
+                        currentLexStr.removeAll()
                     }
-                    currentLexStr.removeAll()
+                    currentLexStr.append(ch)
+                    prevState = state
                 }
-                currentLexStr.append(ch)
-                prevState = state
                 print("S", "Ch:", ch, "Index:", index, "State:", state)
             case let .failure(ch, index, state):
                 print("F", "Ch:", ch, "Index:", index, "State:", state)
@@ -43,15 +43,20 @@ private extension LexemeParser {
 
     enum State: Hashable {
         case stateInitial
-        case stateOB        // Open bracket
-        case stateCB        // Close bracket
+        case stateOB            // Open bracket
+        case stateCB            // Close bracket
         case stateOperator
         case stateNumber
-        case stateAtom      // Variable, constant, function...
-        case stateWS        // Whitespace
+        case stateAtom          // Variable, constant, function...
+        case stateWS            // Whitespace after close bracket
+        case stateWSCB          // Whitespace after
+        case stateWSOperator    // Whitespace after operator
+        case stateWSNumber      // Whitespace after number
+        case stateWSAtom        // Whitespace after atom
         case stateFinal
 
         var isBracket: Bool { self == .stateCB || self == .stateOB }
+        var isWhitespace: Bool { self == .stateWS || self == .stateWSCB || self == .stateWSOperator || self == .stateWSNumber || self == .stateWSAtom }
     }
 
     enum Step {
@@ -87,23 +92,41 @@ private extension LexemeParser {
                 .stepNumber: .stateNumber
             ],
             .stateCB: [
-                .stepWS: .stateWS,
+                .stepWS: .stateWSCB,
+                .stepCB: .stateCB,
+                .stepOperator: .stateOperator,
+                .stepFinal: .stateFinal
+            ],
+            .stateWSCB: [
+                .stepWS: .stateWSCB,
                 .stepCB: .stateCB,
                 .stepOperator: .stateOperator,
                 .stepFinal: .stateFinal
             ],
             .stateOperator: [
-                .stepWS: .stateWS,
+                .stepWS: .stateWSOperator,
                 .stepOB: .stateOB,
                 .stepOperator: .stateOperator,
                 .stepAtom: .stateAtom,
                 .stepNumber: .stateNumber
             ],
+            .stateWSOperator: [
+                .stepWS: .stateWSOperator,
+                .stepOB: .stateOB,
+                .stepAtom: .stateAtom,
+                .stepNumber: .stateNumber
+            ],
             .stateNumber: [
-                .stepWS: .stateWS,
+                .stepWS: .stateWSNumber,
                 .stepCB: .stateCB,
                 .stepOperator: .stateOperator,
                 .stepNumber: .stateNumber,
+                .stepFinal: .stateFinal
+            ],
+            .stateWSNumber: [
+                .stepWS: .stateWSNumber,
+                .stepCB: .stateCB,
+                .stepOperator: .stateOperator,
                 .stepFinal: .stateFinal
             ],
             .stateAtom: [
@@ -112,6 +135,13 @@ private extension LexemeParser {
                 .stepCB: .stateCB,
                 .stepOperator: .stateOperator,
                 .stepAtomFull: .stateAtom,
+                .stepFinal: .stateFinal
+            ],
+            .stateWSAtom: [
+                .stepWS: .stateWSAtom,
+                .stepOB: .stateOB,
+                .stepCB: .stateCB,
+                .stepOperator: .stateOperator,
                 .stepFinal: .stateFinal
             ],
             .stateWS: [
