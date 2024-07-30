@@ -55,8 +55,6 @@ class FinalStateMachineTest: XCTestCase {
                 print("Success:", char, index, state)
             case .failure(_, _, _):
                 XCTFail("Invalid FSM")
-            default:
-                break
             }
         }
     }
@@ -75,8 +73,6 @@ class FinalStateMachineTest: XCTestCase {
             case let .failure(char, index, state):
                 print("Failure:", char, index, state)
                 failure = true
-            default:
-                break
             }
         }
         XCTAssert(failure, "Invalid FSM")
