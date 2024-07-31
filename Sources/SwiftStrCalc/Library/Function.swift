@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Function: Operation {
+public struct Function {
 
     let name: String
 

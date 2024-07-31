@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		291624782C45699800DD3759 /* FinalStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291624772C45699800DD3759 /* FinalStateMachine.swift */; };
-		294901492C5913C7006EF0CF /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294901482C5913C7006EF0CF /* Operation.swift */; };
 		2949014C2C59160E006EF0CF /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2949014B2C59160E006EF0CF /* Function.swift */; };
 		2971CADA2C4FD9E500A89F63 /* Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2971CAD92C4FD9E500A89F63 /* Library.swift */; };
 		298030B42C4E419C00471172 /* ExpressionParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298030B32C4E419C00471172 /* ExpressionParser.swift */; };
@@ -33,7 +32,6 @@
 
 /* Begin PBXFileReference section */
 		291624772C45699800DD3759 /* FinalStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalStateMachine.swift; sourceTree = "<group>"; };
-		294901482C5913C7006EF0CF /* Operation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
 		2949014B2C59160E006EF0CF /* Function.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Function.swift; sourceTree = "<group>"; };
 		2971CAD92C4FD9E500A89F63 /* Library.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Library.swift; sourceTree = "<group>"; };
 		298030B32C4E419C00471172 /* ExpressionParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionParser.swift; sourceTree = "<group>"; };
@@ -69,7 +67,6 @@
 		294901472C5913A2006EF0CF /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				294901482C5913C7006EF0CF /* Operation.swift */,
 				2949014B2C59160E006EF0CF /* Function.swift */,
 				2971CAD92C4FD9E500A89F63 /* Library.swift */,
 			);
@@ -244,7 +241,6 @@
 				2971CADA2C4FD9E500A89F63 /* Library.swift in Sources */,
 				298030B42C4E419C00471172 /* ExpressionParser.swift in Sources */,
 				291624782C45699800DD3759 /* FinalStateMachine.swift in Sources */,
-				294901492C5913C7006EF0CF /* Operation.swift in Sources */,
 				29E120E92C5A290800F529B1 /* ExpressionEvaluator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
