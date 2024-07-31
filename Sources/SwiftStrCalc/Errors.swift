@@ -9,6 +9,6 @@ import Foundation
 
 public enum CalcError: Error {
     case FSMRouteError(char: Character, index: UInt)
-    case bracketsCountError
+    case bracketsCountError(char: Character, index: UInt)
     case existFunctionError
 }
