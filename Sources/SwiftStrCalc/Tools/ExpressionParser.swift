@@ -1,5 +1,5 @@
 //
-//  LexemeParser.swift
+//  ExpressionParser.swift
 //  SwiftStrCalc
 //
 //  Created by Alex Syschenko on 22.07.2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class LexemeParser {
+final class ExpressionParser {
 
     private var finalStateMachine: FinalStateMachine<State>?
 
@@ -61,7 +61,7 @@ final class LexemeParser {
 }
 
 // MARK: - Types
-extension LexemeParser {
+extension ExpressionParser {
 
     enum LexemeType {
         case number
@@ -80,7 +80,7 @@ extension LexemeParser {
 }
 
 // MARK: - Private types
-private extension LexemeParser {
+private extension ExpressionParser {
 
     enum State: Hashable {
         case stateInitial
@@ -124,7 +124,7 @@ private extension LexemeParser {
 }
 
 // MARK: - Private
-private extension LexemeParser {
+private extension ExpressionParser {
 
     func createFSM() -> FinalStateMachine<State> {
         let sourceRoute: [State: [Step: State]] = [

@@ -9,7 +9,7 @@ import Foundation
 
 open class Calc {
 
-    private let lexParser: LexemeParser
+    private let expParser: ExpressionParser
 
     let library: Library
 
@@ -21,11 +21,11 @@ open class Calc {
         try? library.add(function: Function(name: "tg"))
 
         self.library = library
-        self.lexParser = LexemeParser()
+        self.expParser = ExpressionParser()
     }
 
     public func calculate(_ exp: String) throws {
-        let lexemes = try lexParser.parse(exp)
+        let lexemes = try expParser.parse(exp)
 
         print("Index\tValue\t\tType")
         print("------------------------")
