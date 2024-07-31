@@ -22,6 +22,7 @@ final class ExpressionEvaluator {
 
         try parse(lexemes)
 
+        print(exp)
         print("Index\tValue\t\tType")
         print("------------------------")
         lexemes.forEach {

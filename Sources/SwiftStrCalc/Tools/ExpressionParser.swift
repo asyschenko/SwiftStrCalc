@@ -18,6 +18,7 @@ final class ExpressionParser {
 
     func parse(_ exp: String) throws -> [Lexeme] {
         var prevState: State = .stateInitial
+        var prevIndex: UInt = 0
         var currentLexStr: String = ""
         var error: CalcError?
         var lexemes: [Lexeme] = []
@@ -33,8 +34,9 @@ final class ExpressionParser {
                     if !currentLexStr.isEmpty && (state.isBracket || state != prevState) {
                         lexemes.append(Lexeme(type: prevState.lexemeType,
                                               value: currentLexStr,
-                                              startIndexInExp: index))
+                                              startIndexInExp: prevIndex))
                         currentLexStr.removeAll()
+                        prevIndex = index
                     }
                     currentLexStr.append(char)
                     prevState = state
