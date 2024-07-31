@@ -16,7 +16,6 @@ final class ExpressionParser {
         var currentLexStr: String = ""
         var error: CalcError?
         var lexemes: [Lexeme] = []
-        var bracketsCounter: Int = 0
 
         if finalStateMachine == nil {
             finalStateMachine = createFSM()
@@ -27,18 +26,9 @@ final class ExpressionParser {
             case let .success(char, index, state):
                 if !state.isWhitespace {
                     if !currentLexStr.isEmpty && (state.isBracket || state != prevState) {
-                        let lexeme = Lexeme(type: prevState.lexemeType,
-                                            value: currentLexStr,
-                                            startIndexInExp: index)
-
-                        if lexeme.type == .openBracket {
-                            bracketsCounter += 1
-                        }
-
-                        if lexeme.type == .closeBracket {
-                            bracketsCounter -= 1
-                        }
-                        lexemes.append(lexeme)
+                        lexemes.append(Lexeme(type: prevState.lexemeType,
+                                              value: currentLexStr,
+                                              startIndexInExp: index))
                         currentLexStr.removeAll()
                     }
                     currentLexStr.append(char)
@@ -51,10 +41,6 @@ final class ExpressionParser {
 
         if let error = error {
             throw error
-        }
-
-        if bracketsCounter != 0 {
-            throw CalcError.bracketsCountError
         }
         return lexemes
     }
