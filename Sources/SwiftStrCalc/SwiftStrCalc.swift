@@ -14,14 +14,14 @@ open class Calc {
     let library: Library
 
     public init() {
-        let library = Library()
+        let calcLibrary = Library()
 
-        try? library.add(function: Function(name: "cos"))
-        try? library.add(function: Function(name: "sin"))
-        try? library.add(function: Function(name: "tg"))
+        try? calcLibrary.add(function: Function(name: "cos"))
+        try? calcLibrary.add(function: Function(name: "sin"))
+        try? calcLibrary.add(function: Function(name: "tg"))
 
-        self.library = library
-        self.expParser = ExpressionParser()
+        self.library = calcLibrary
+        self.expParser = ExpressionParser(library: calcLibrary)
     }
 
     public func calculate(_ exp: String) throws {

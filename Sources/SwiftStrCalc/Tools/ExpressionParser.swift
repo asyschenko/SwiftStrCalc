@@ -9,7 +9,12 @@ import Foundation
 
 final class ExpressionParser {
 
+    private let library: Library
     private var finalStateMachine: FinalStateMachine<State>?
+
+    init(library: Library) {
+        self.library = library
+    }
 
     func parse(_ exp: String) throws -> [Lexeme] {
         var prevState: State = .stateInitial
