@@ -11,17 +11,10 @@ open class Calc {
 
     private let expEvaluator: ExpressionEvaluator
 
-    let library: Library
+    let library = Library()
 
     public init() {
-        let calcLibrary = Library()
-
-        try? calcLibrary.add(function: Function(name: "cos"))
-        try? calcLibrary.add(function: Function(name: "sin"))
-        try? calcLibrary.add(function: Function(name: "tg"))
-
-        self.library = calcLibrary
-        self.expEvaluator = ExpressionEvaluator(library: calcLibrary)
+        self.expEvaluator = ExpressionEvaluator(library: library)
     }
 
     public func evaluate(expression: String) throws {

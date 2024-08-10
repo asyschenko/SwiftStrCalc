@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum OperatorType: Hashable {
+enum OperatorType {
     case binary
     case unaryLeft
     case unaryRight
@@ -24,7 +24,7 @@ enum OperatorPriority: UInt {
     case highest = 7    // ()
 }
 
-protocol Operator: Hashable {
+protocol Operator {
 
     var name: String { get }
     var type: OperatorType { get }
@@ -121,11 +121,12 @@ struct Division: Operator {
 
     func getValue(at args: [Calc.Value], lexeme: ExpressionParser.Lexeme) throws -> Calc.Value {
         let operands = try checkNumberBinary(args, lexeme)
+        let result = operands.leftArg / operands.rightArg
 
-        if operands.rightArg == 0.0 {
+        if result == .infinity {
             throw CalcError.divisionByZero(operator: lexeme.value, index: lexeme.startIndexInExp)
         }
-        return .realNumber(operands.leftArg / operands.rightArg)
+        return .realNumber(result)
     }
 }
 

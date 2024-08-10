@@ -90,7 +90,9 @@ private extension ExpressionParser {
         case stateFinal
 
         var isBracket: Bool { self == .stateCB || self == .stateOB }
-        var isWhitespace: Bool { self == .stateWS || self == .stateWSCB || self == .stateWSOperator || self == .stateWSNumber || self == .stateWSAtom }
+        var isWhitespace: Bool {
+            self == .stateWS || self == .stateWSCB || self == .stateWSOperator || self == .stateWSNumber || self == .stateWSAtom
+        }
 
         var lexemeType: LexemeType {
             switch self {
@@ -199,6 +201,16 @@ private extension ExpressionParser {
                 .stepFinal: .stateFinal
             ]
         ]
+        let alphabets: [Step: Set<Character>] = [
+            .stepOB: ["("],
+            .stepCB: [")"],
+            .stepWS: ["\u{0020}", "\t", "\n"],
+            .stepNumber: Set<Character>(charSequence(at: "0", to: "9") + ["."]),
+            .stepOperator: operatorsAlphabet(),
+            .stepAtom: Set<Character>(charSequence(at: "a", to: "z") + charSequence(at: "A", to: "Z") + ["_"]),
+            .stepAtomFull: Set<Character>(charSequence(at: "a", to: "z") + charSequence(at: "A", to: "Z") + charSequence(at: "0", to: "9") + ["_"]),
+            .stepFinal: ["#"]
+        ]
         var route: [State: [Character: State]] = [:]
 
         for currentPare in sourceRoute {
@@ -207,9 +219,9 @@ private extension ExpressionParser {
             var routeSteps: [Character: State] = [:]
 
             currentSteps.forEach { currentStepPare in
-                let alphabet = alphabet(at: currentStepPare.key)
+                let alphabet = alphabets[currentStepPare.key]
 
-                alphabet.forEach { currentChar in
+                alphabet?.forEach { currentChar in
                     routeSteps[currentChar] = currentStepPare.value
                 }
             }
@@ -218,28 +230,18 @@ private extension ExpressionParser {
         return FinalStateMachine(route: route, initialState: .stateInitial, finalStates: [.stateFinal])
     }
 
-    func alphabet(at step: Step) -> Set<Character> {
-        switch step {
-        case .stepOB:
-            return ["("]
-        case .stepCB:
-            return [")"]
-        case .stepWS:
-            return ["\u{0020}", "\t", "\n"]
-        case .stepNumber:
-            return Set<Character>(chSequence(at: "0", to: "9") + ["."])
-        case .stepOperator:
-            return ["+", "-", "/", "*", "="]
-        case .stepAtom:
-            return Set<Character>(chSequence(at: "a", to: "z") + chSequence(at: "A", to: "Z") + ["_"])
-        case .stepAtomFull:
-            return Set<Character>(chSequence(at: "a", to: "z") + chSequence(at: "A", to: "Z") + chSequence(at: "0", to: "9") + ["_"])
-        case .stepFinal:
-            return ["#"]
+    func operatorsAlphabet() -> Set<Character> {
+        var returnSet = Set<Character>()
+
+        library.operators.forEach { currentOperator in
+            currentOperator.name.forEach {
+                returnSet.insert($0)
+            }
         }
+        return returnSet
     }
 
-    func chSequence(at: Unicode.Scalar, to: Unicode.Scalar) -> [Character] {
+    func charSequence(at: Unicode.Scalar, to: Unicode.Scalar) -> [Character] {
         let range = at.value...to.value
 
         return range.compactMap() {

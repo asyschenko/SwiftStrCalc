@@ -7,11 +7,6 @@
 
 import Foundation
 
-public struct Function {
-
-    let name: String
-
-    init(name: String) {
-        self.name = name
-    }
+protocol Function {
+    
 }
