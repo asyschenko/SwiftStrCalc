@@ -28,3 +28,12 @@ open class Calc {
         try expEvaluator.evaluate(expression)
     }
 }
+
+// MARK: - Types
+public extension Calc {
+
+    enum Value {
+        case realNumber(Double)
+        case boolean(Bool)
+    }
+}

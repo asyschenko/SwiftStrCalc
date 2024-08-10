@@ -12,6 +12,7 @@
 		2971CADA2C4FD9E500A89F63 /* Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2971CAD92C4FD9E500A89F63 /* Library.swift */; };
 		298030B42C4E419C00471172 /* ExpressionParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298030B32C4E419C00471172 /* ExpressionParser.swift */; };
 		298030B62C4E422200471172 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298030B52C4E422200471172 /* Errors.swift */; };
+		2995E4E32C668FE500313A32 /* Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2995E4E22C668FE500313A32 /* Operator.swift */; };
 		29AD15772C3FFE7E003F8CA3 /* SwiftStrCalc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AD156E2C3FFE7E003F8CA3 /* SwiftStrCalc.framework */; };
 		29AD15882C3FFED1003F8CA3 /* SwiftStrCalc.h in Headers */ = {isa = PBXBuildFile; fileRef = 29AD15872C3FFED1003F8CA3 /* SwiftStrCalc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		29AD158B2C3FFEE2003F8CA3 /* FinalStateMachineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD15892C3FFEE2003F8CA3 /* FinalStateMachineTest.swift */; };
@@ -36,6 +37,7 @@
 		2971CAD92C4FD9E500A89F63 /* Library.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Library.swift; sourceTree = "<group>"; };
 		298030B32C4E419C00471172 /* ExpressionParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionParser.swift; sourceTree = "<group>"; };
 		298030B52C4E422200471172 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		2995E4E22C668FE500313A32 /* Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operator.swift; sourceTree = "<group>"; };
 		29AD156E2C3FFE7E003F8CA3 /* SwiftStrCalc.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftStrCalc.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29AD15762C3FFE7E003F8CA3 /* SwiftStrCalcTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftStrCalcTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		29AD15872C3FFED1003F8CA3 /* SwiftStrCalc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftStrCalc.h; sourceTree = SOURCE_ROOT; };
@@ -67,6 +69,7 @@
 		294901472C5913A2006EF0CF /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				2995E4E22C668FE500313A32 /* Operator.swift */,
 				2949014B2C59160E006EF0CF /* Function.swift */,
 				2971CAD92C4FD9E500A89F63 /* Library.swift */,
 			);
@@ -240,6 +243,7 @@
 				2949014C2C59160E006EF0CF /* Function.swift in Sources */,
 				2971CADA2C4FD9E500A89F63 /* Library.swift in Sources */,
 				298030B42C4E419C00471172 /* ExpressionParser.swift in Sources */,
+				2995E4E32C668FE500313A32 /* Operator.swift in Sources */,
 				291624782C45699800DD3759 /* FinalStateMachine.swift in Sources */,
 				29E120E92C5A290800F529B1 /* ExpressionEvaluator.swift in Sources */,
 			);
