@@ -7,13 +7,25 @@
 
 import Foundation
 
+protocol Alphabets {
+
+    var openBracket: Set<Character> { get }
+    var closeBracket: Set<Character> { get }
+    var whiteSpace: Set<Character> { get }
+    var number: Set<Character> { get }
+    var `operator`: Set<Character> { get }
+    var atom: Set<Character> { get }
+    var atomFull: Set<Character> { get }
+    var final: Set<Character> { get }
+}
+
 final class ExpressionParser {
 
-    private let library: Library
+    private let alphabets: Alphabets
     private var finalStateMachine: FinalStateMachine<State>?
 
-    init(library: Library) {
-        self.library = library
+    init(alphabets: Library) {
+        self.alphabets = alphabets
     }
 
     func parse(_ exp: String) throws -> [Lexeme] {
@@ -82,8 +94,8 @@ private extension ExpressionParser {
         case stateOperator
         case stateNumber
         case stateAtom          // Variable, constant, function...
-        case stateWS            // Whitespace after close bracket
-        case stateWSCB          // Whitespace after
+        case stateWS            // Whitespace
+        case stateWSCB          // Whitespace after close bracket
         case stateWSOperator    // Whitespace after operator
         case stateWSNumber      // Whitespace after number
         case stateWSAtom        // Whitespace after atom
@@ -202,14 +214,14 @@ private extension ExpressionParser {
             ]
         ]
         let alphabets: [Step: Set<Character>] = [
-            .stepOB: ["("],
-            .stepCB: [")"],
-            .stepWS: ["\u{0020}", "\t", "\n"],
-            .stepNumber: Set<Character>(charSequence(at: "0", to: "9") + ["."]),
-            .stepOperator: operatorsAlphabet(),
-            .stepAtom: Set<Character>(charSequence(at: "a", to: "z") + charSequence(at: "A", to: "Z") + ["_"]),
-            .stepAtomFull: Set<Character>(charSequence(at: "a", to: "z") + charSequence(at: "A", to: "Z") + charSequence(at: "0", to: "9") + ["_"]),
-            .stepFinal: ["#"]
+            .stepOB: alphabets.openBracket,
+            .stepCB: alphabets.closeBracket,
+            .stepWS: alphabets.whiteSpace,
+            .stepNumber: alphabets.number,
+            .stepOperator: alphabets.operator,
+            .stepAtom: alphabets.atom,
+            .stepAtomFull: alphabets.atomFull,
+            .stepFinal: alphabets.final
         ]
         var route: [State: [Character: State]] = [:]
 
@@ -228,27 +240,5 @@ private extension ExpressionParser {
             route[currentState] = routeSteps
         }
         return FinalStateMachine(route: route, initialState: .stateInitial, finalStates: [.stateFinal])
-    }
-
-    func operatorsAlphabet() -> Set<Character> {
-        var returnSet = Set<Character>()
-
-        library.operators.forEach { currentOperator in
-            currentOperator.name.forEach {
-                returnSet.insert($0)
-            }
-        }
-        return returnSet
-    }
-
-    func charSequence(at: Unicode.Scalar, to: Unicode.Scalar) -> [Character] {
-        let range = at.value...to.value
-
-        return range.compactMap() {
-            if let scalar = Unicode.Scalar($0) {
-                return Character(scalar)
-            }
-            return nil
-        }
     }
 }

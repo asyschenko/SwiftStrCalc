@@ -14,7 +14,7 @@ final class ExpressionEvaluator {
 
     init(library: Library) {
         self.library = library
-        self.expParser = ExpressionParser(library: library)
+        self.expParser = ExpressionParser(alphabets: library)
     }
 
     func evaluate(_ exp: String) throws {

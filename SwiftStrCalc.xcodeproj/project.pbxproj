@@ -69,9 +69,9 @@
 		294901472C5913A2006EF0CF /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				2971CAD92C4FD9E500A89F63 /* Library.swift */,
 				2995E4E22C668FE500313A32 /* Operator.swift */,
 				2949014B2C59160E006EF0CF /* Function.swift */,
-				2971CAD92C4FD9E500A89F63 /* Library.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
