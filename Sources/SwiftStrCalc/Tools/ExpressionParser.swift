@@ -24,7 +24,7 @@ final class ExpressionParser {
     private let alphabets: Alphabets
     private var finalStateMachine: FinalStateMachine<State>?
 
-    init(alphabets: Library) {
+    init(alphabets: Alphabets) {
         self.alphabets = alphabets
     }
 
@@ -34,12 +34,13 @@ final class ExpressionParser {
         var currentLexStr: String = ""
         var error: CalcError?
         var lexemes: [Lexeme] = []
+        let final = String(alphabets.final.first ?? Character(""))
 
         if finalStateMachine == nil {
             finalStateMachine = createFSM()
         }
 
-        finalStateMachine?.start(exp + "#") { result in
+        finalStateMachine?.start(exp + final) { result in
             switch result {
             case let .success(char, index, state):
                 if !state.isWhitespace {
